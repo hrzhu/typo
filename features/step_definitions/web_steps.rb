@@ -48,6 +48,13 @@ Given /^the blog is set up$/ do
                 :profile_id =>2,
                 :name => 'alice',
                 :state => 'active'})
+
+  User.create!({:login => 'bob',
+                :password => 'bobbob',
+                :email => 'bob@example.com',
+                :profile_id => 3,
+                :name => 'bob',
+                :state => 'active'})  
 end
 
 And /^I am logged into the admin panel$/ do
