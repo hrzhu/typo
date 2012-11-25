@@ -81,8 +81,13 @@ class Article < Content
   end
 
   def merge_with(id)
-    merged_body = Article.find_by_id(id).body + "<br/>" + self.body
-    Article.update(id, :body => merged_body)
+    article_to_be_merged = Article.find_by_id(id)
+    merged_body = article_to_be_merged.body + "<br/>" + self.body
+    article_to_be_merged.update_attribute(:body, merged_body)
+    Comment.find_all_by_article_id(self.id).each do |c|
+      article_to_be_merged.comments << c
+    end
+    article_to_be_merged.save
     self.delete
   end
 
