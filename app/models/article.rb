@@ -80,6 +80,12 @@ class Article < Content
     Article.exists?({:parent_id => self.id})
   end
 
+  def merge_with(id)
+    merged_body = Article.find_by_id(id).body + "<br/>" + self.body
+    Article.update(id, :body => merged_body)
+    self.delete
+  end
+
   attr_accessor :draft, :keywords
 
   has_state(:state,
